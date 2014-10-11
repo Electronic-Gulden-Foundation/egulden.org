@@ -14,6 +14,7 @@ class Dispatcher {
 		$controller_name = 'Controller_'.$this->_router->getControllerName();
 		$action_name     = $this->_router->getActionName().'Action';
 
+		// Check if class exists
 		if ( ! @class_exists($controller_name))
 			throw new Exception('Controller '.$controller_name.' not found');
 
@@ -21,16 +22,22 @@ class Dispatcher {
 		$controller->setDispatcher($this);
 		$controller->setRouter($this->_router);
 
-		$controller->before();
-
+		// Check if the action exists
 		if ( ! method_exists($controller, $action_name))
 			throw new Exception('Action '.$action_name.' not found on Controller '.$controller_name);
 
 		ob_start();
-		call_user_func_array(array($controller, $action_name), array());
-		$result = ob_get_clean();
+		// Call the before function
+		$controller->before();
 
+		// Call the action on the controller
+		call_user_func_array(array($controller, $action_name), array());
+
+		// Call the after function
 		$controller->after();
+
+		// Get the output
+		$result = ob_get_clean();
 
 		return $result;
 	}

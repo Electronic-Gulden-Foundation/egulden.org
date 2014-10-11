@@ -2,18 +2,24 @@
 
 abstract class Controller_Base {
 
-	protected $dispatcher = NULL;
+	protected $_dispatcher = NULL;
 
-	protected $router = NULL;
+	protected $_router = NULL;
+
+	protected $_template = 'templates/index';
 
 	public function after()
 	{
-
+		echo $this->_template->render();
 	}
 
 	public function before()
 	{
-
+		// Initialize the template
+		if(is_string($this->_template))
+		{
+			$this->_template = new View($this->_template);
+		}
 	}
 
 	public function setDispatcher(Dispatcher $dispatcher)

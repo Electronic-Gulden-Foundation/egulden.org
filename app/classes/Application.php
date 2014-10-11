@@ -9,6 +9,8 @@ class Application {
 
 		$dispatcher = new Dispatcher($router);
 
+		View::$viewdir = APPPATH.'/views';
+
 		return $dispatcher->dispatch();
 	}
 
