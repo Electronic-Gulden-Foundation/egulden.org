@@ -35,4 +35,18 @@ class View {
 		return $result;
 	}
 
+	public function __toString()
+	{
+		try
+		{
+			$result = $this->render();
+		}
+		catch(Exception $e)
+		{
+			$result = $e->getMessage();
+		}
+
+		return $result;
+	}
+
 }

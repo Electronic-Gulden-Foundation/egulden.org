@@ -10,7 +10,8 @@ abstract class Controller_Base {
 
 	public function after()
 	{
-		echo $this->_template->render();
+		if ($this->_template instanceof View)
+			echo $this->_template->render();
 	}
 
 	public function before()
@@ -19,6 +20,7 @@ abstract class Controller_Base {
 		if(is_string($this->_template))
 		{
 			$this->_template = new View($this->_template);
+			$this->_template->title = 'e-Gulden - Cryptovaluta voor Nederland';
 		}
 	}
 
